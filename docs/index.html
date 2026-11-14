@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Queremos saber tu experiencia en el campus SJ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="top-bar"></div>
+
+  <main class="page">
+    <form id="formulario" class="form" autocomplete="off">
+      <section class="card title-card">
+        <h1>Queremos saber tu experiencia en el campus SJ</h1>
+      </section>
+
+      <section class="card question">
+        <label for="nombre">Nombre y Apellido</label>
+        <input type="text" id="nombre" required autocomplete="off">
+      </section>
+
+      <section class="card question">
+        <label for="numero-alumno">Número de alumno</label>
+        <input type="text" id="numero-alumno" inputmode="numeric" required autocomplete="off">
+      </section>
+
+      <section class="card question">
+        <label for="carrera">Carrera a la que perteneces</label>
+        <input type="text" id="carrera" required autocomplete="off">
+      </section>
+
+      <section class="card question">
+        <label for="anios">Cuántos años llevas en el campus</label>
+        <select id="anios" required>
+          <option value="" disabled selected hidden></option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5 o más+</option>
+        </select>
+      </section>
+
+      <fieldset class="card question scale-question">
+        <legend>Qué tan satisfecho/a estás con tu comodidad en el campus</legend>
+        <div class="scale">
+          <label class="scale-item"><input type="radio" name="comodidad" value="1" required><span>1</span></label>
+          <label class="scale-item"><input type="radio" name="comodidad" value="2"><span>2</span></label>
+          <label class="scale-item"><input type="radio" name="comodidad" value="3"><span>3</span></label>
+          <label class="scale-item"><input type="radio" name="comodidad" value="4"><span>4</span></label>
+          <label class="scale-item"><input type="radio" name="comodidad" value="5"><span>5</span></label>
+        </div>
+        <div class="scale-ends">
+          <span>Completamente insatisfecho/a</span>
+          <span>Completamente satisfecho/a</span>
+        </div>
+      </fieldset>
+
+      <fieldset class="card question scale-question">
+        <legend>Qué tan satisfecho/a estás con los eventos realizados en el campus</legend>
+        <div class="scale">
+          <label class="scale-item"><input type="radio" name="eventos" value="1" required><span>1</span></label>
+          <label class="scale-item"><input type="radio" name="eventos" value="2"><span>2</span></label>
+          <label class="scale-item"><input type="radio" name="eventos" value="3"><span>3</span></label>
+          <label class="scale-item"><input type="radio" name="eventos" value="4"><span>4</span></label>
+          <label class="scale-item"><input type="radio" name="eventos" value="5"><span>5</span></label>
+        </div>
+        <div class="scale-ends">
+          <span>Completamente insatisfecho/a</span>
+          <span>Completamente satisfecho/a</span>
+        </div>
+      </fieldset>
+
+      <fieldset class="card question scale-question">
+        <legend>Qué tan satisfecho/a estás con el área de tu facultad</legend>
+        <div class="scale">
+          <label class="scale-item"><input type="radio" name="facultad" value="1" required><span>1</span></label>
+          <label class="scale-item"><input type="radio" name="facultad" value="2"><span>2</span></label>
+          <label class="scale-item"><input type="radio" name="facultad" value="3"><span>3</span></label>
+          <label class="scale-item"><input type="radio" name="facultad" value="4"><span>4</span></label>
+          <label class="scale-item"><input type="radio" name="facultad" value="5"><span>5</span></label>
+        </div>
+        <div class="scale-ends">
+          <span>Completamente insatisfecho/a</span>
+          <span>Completamente satisfecho/a</span>
+        </div>
+      </fieldset>
+
+      <section class="card question">
+        <label for="cambio">Responde en pocas palabras qué cambiarías del campus SJ</label>
+        <textarea id="cambio" rows="4" required></textarea>
+      </section>
+
+      <div class="actions">
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+
+    <section id="resultado" class="card result" hidden aria-live="polite">
+      <p class="result-message">Esto era una simulación realizada para el curso "Seguridad Computacional", para investigar cuántas personas caen en Phishing mediante escaneo de códigos QR y cuántos efectivamente ceden sus datos. Tus datos no fueron enviados ni guardados, el fin solamente era ese</p>
+
+      <div class="counter">
+        <p class="counter-label">Cantidad de personas que escanearon el QR:</p>
+        <p class="counter-value" id="contador-escaneos">&mdash;</p>
+      </div>
+
+      <div class="counter">
+        <p class="counter-label">Cantidad de personas que cedieron sus datos:</p>
+        <p class="counter-value" id="contador-datos">&mdash;</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

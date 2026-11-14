@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Código QR</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .qr-page {
+      max-width: 560px;
+    }
+
+    .qr-card {
+      padding: 28px 24px;
+    }
+
+    .qr-card h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1.25;
+    }
+
+    .qr-help {
+      margin: 0 0 24px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .qr-field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .qr-field input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+    }
+
+    .qr-field input:focus {
+      border: 2px solid var(--purple);
+      padding: 9px 11px;
+    }
+
+    .qr-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .qr-button {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      padding: 9px 18px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--purple);
+      cursor: pointer;
+    }
+
+    .qr-button:hover {
+      background: #f8f5fd;
+      border-color: #d2c4ea;
+    }
+
+    .qr-button.primary {
+      border-color: var(--purple);
+      background: var(--purple);
+      color: #fff;
+    }
+
+    .qr-button.primary:hover {
+      background: var(--purple-dark);
+    }
+
+    .qr-preview {
+      display: flex;
+      justify-content: center;
+      margin: 28px 0 8px;
+    }
+
+    .qr-preview svg {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      display: block;
+    }
+
+    .qr-note {
+      margin: 20px 0 0;
+      padding-top: 16px;
+      border-top: 1px solid #eee;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar"></div>
+
+  <main class="page qr-page">
+    <section class="card qr-card">
+      <h1>Código QR</h1>
+      <p class="qr-help">Abre esta página desde la URL publicada en GitHub Pages para que el QR apunte al formulario.</p>
+
+      <div class="qr-field">
+        <label for="url">URL de la página</label>
+        <input type="url" id="url" spellcheck="false" autocomplete="off">
+      </div>
+
+      <div class="qr-actions">
+        <button type="button" class="qr-button primary" id="generar">Generar</button>
+        <button type="button" class="qr-button" id="descargar-png" hidden>Descargar PNG</button>
+        <button type="button" class="qr-button" id="descargar-svg" hidden>Descargar SVG</button>
+      </div>
+
+      <div class="qr-preview" id="qr"></div>
+
+      <p class="qr-note">Guarda la imagen y úsala en el material del ejercicio. El QR solo contiene la URL, no datos personales.</p>
+    </section>
+  </main>
+
+  <script src="vendor/qrcode.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var urlInput = document.getElementById('url');
+      var qrBox = document.getElementById('qr');
+      var pngButton = document.getElementById('descargar-png');
+      var svgButton = document.getElementById('descargar-svg');
+      var currentQR = null;
+
+      function initialURL() {
+        try {
+          return new URL('.', window.location.href).href;
+        } catch (error) {
+          return window.location.href;
+        }
+      }
+
+      function setDownloadsVisible(visible) {
+        pngButton.hidden = !visible;
+        svgButton.hidden = !visible;
+      }
+
+      function render() {
+        var value = urlInput.value.trim();
+
+        if (!value) {
+          qrBox.innerHTML = '';
+          currentQR = null;
+          setDownloadsVisible(false);
+          return;
+        }
+
+        try {
+          var qr = window.qrcode(0, 'M');
+          qr.addData(value);
+          qr.make();
+
+          qrBox.innerHTML = qr.createSvgTag({
+            cellSize: 8,
+            margin: 24,
+            scalable: true,
+            alt: 'Código QR con la URL del formulario',
+            title: 'Código QR'
+          });
+
+          currentQR = qr;
+          setDownloadsVisible(true);
+        } catch (error) {
+          qrBox.textContent = 'No se pudo generar el código QR.';
+          currentQR = null;
+          setDownloadsVisible(false);
+        }
+      }
+
+      function download(blob, filename) {
+        var link = document.createElement('a');
+        var objectURL = URL.createObjectURL(blob);
+
+        link.href = objectURL;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(objectURL);
+      }
+
+      pngButton.addEventListener('click', function () {
+        if (!currentQR) {
+          return;
+        }
+
+        var link = document.createElement('a');
+        link.href = currentQR.createDataURL(16, 64);
+        link.download = 'qr-campus-sj.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+
+      svgButton.addEventListener('click', function () {
+        if (!currentQR) {
+          return;
+        }
+
+        var svg = currentQR.createSvgTag({
+          cellSize: 16,
+          margin: 64,
+          scalable: false,
+          alt: 'Código QR con la URL del formulario',
+          title: 'Código QR'
+        });
+
+        download(
+          new Blob(['<?xml version="1.0" encoding="UTF-8"?>\n' + svg], { type: 'image/svg+xml;charset=utf-8' }),
+          'qr-campus-sj.svg'
+        );
+      });
+
+      document.getElementById('generar').addEventListener('click', render);
+      urlInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          render();
+        }
+      });
+
+      urlInput.value = initialURL();
+      render();
+    })();
+  </script>
+</body>
+</html>

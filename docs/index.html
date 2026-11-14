@@ -14,27 +14,28 @@
     <form id="formulario" class="form" autocomplete="off">
       <section class="card title-card">
         <h1>Queremos saber tu experiencia en el campus SJ</h1>
+        <p class="required-note">* Indica que la pregunta es obligatoria</p>
       </section>
 
       <section class="card question">
         <label for="nombre">Nombre y Apellido</label>
-        <input type="text" id="nombre" required autocomplete="off">
+        <input type="text" id="nombre" placeholder="Tu respuesta" required autocomplete="off">
       </section>
 
       <section class="card question">
         <label for="numero-alumno">Número de alumno</label>
-        <input type="text" id="numero-alumno" inputmode="numeric" required autocomplete="off">
+        <input type="text" id="numero-alumno" placeholder="Tu respuesta" inputmode="numeric" required autocomplete="off">
       </section>
 
       <section class="card question">
         <label for="carrera">Carrera a la que perteneces</label>
-        <input type="text" id="carrera" required autocomplete="off">
+        <input type="text" id="carrera" placeholder="Tu respuesta" required autocomplete="off">
       </section>
 
       <section class="card question">
         <label for="anios">Cuántos años llevas en el campus</label>
         <select id="anios" required>
-          <option value="" disabled selected hidden></option>
+          <option value="" disabled selected hidden>Tu respuesta</option>
           <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -91,7 +92,7 @@
 
       <section class="card question">
         <label for="cambio">Responde en pocas palabras qué cambiarías del campus SJ</label>
-        <textarea id="cambio" rows="4" required></textarea>
+        <textarea id="cambio" rows="4" placeholder="Tu respuesta" required></textarea>
       </section>
 
       <div class="actions">
